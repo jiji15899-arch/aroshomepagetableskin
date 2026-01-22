@@ -31,27 +31,21 @@
             <nav class="tab-container">
                 <ul class="tabs">
                     <?php
-                    $current_url = home_url($_SERVER['REQUEST_URI']);
                     for ($i = 1; $i <= 4; $i++) {
-                        $enabled = get_theme_mod("aros_tab{$i}_enabled", ($i <= 3));
                         $name = get_theme_mod("aros_tab{$i}_name");
                         $url = get_theme_mod("aros_tab{$i}_url");
+                        $is_active_setting = get_theme_mod("aros_tab{$i}_active", ($i === 1));
                         
-                        // 이름이 비어있거나 비활성화된 경우 스킵
-                        if (!$enabled || empty($name)) {
+                        // 이름이 입력되어 있으면 무조건 표시
+                        if (empty($name)) {
                             continue;
                         }
                         
-                        // 현재 URL과 비교하여 active 클래스 결정
-                        $is_active = (strpos($current_url, $url) !== false) ? 'active' : '';
-                        
-                        // 첫 번째 탭에 기본 active 클래스 (다른 active가 없는 경우)
-                        if ($i === 1 && empty($is_active)) {
-                            $is_active = 'active';
-                        }
+                        // 활성화 설정 확인
+                        $active_class = $is_active_setting ? 'active' : '';
                         ?>
                         <li class="tab-item">
-                            <a class="tab-link <?php echo esc_attr($is_active); ?>" 
+                            <a class="tab-link <?php echo esc_attr($active_class); ?>" 
                                data-tab="aros<?php echo $i; ?>" 
                                href="<?php echo esc_url($url); ?>#aros<?php echo $i; ?>">
                                 <?php echo esc_html($name); ?>
