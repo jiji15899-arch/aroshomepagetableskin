@@ -72,18 +72,6 @@ function aros_index_customize_register($wp_customize) {
     
     // 탭 1~4 설정
     for ($i = 1; $i <= 4; $i++) {
-        // 탭 활성화
-        $wp_customize->add_setting("aros_tab{$i}_enabled", array(
-            'default' => ($i <= 3) ? true : false,
-            'sanitize_callback' => 'wp_validate_boolean',
-        ));
-        
-        $wp_customize->add_control("aros_tab{$i}_enabled", array(
-            'label' => "탭 {$i} 활성화",
-            'section' => 'aros_tabs',
-            'type' => 'checkbox',
-        ));
-        
         // 탭 이름
         $wp_customize->add_setting("aros_tab{$i}_name", array(
             'default' => '',
@@ -106,6 +94,19 @@ function aros_index_customize_register($wp_customize) {
             'label' => "탭 {$i} URL",
             'section' => 'aros_tabs',
             'type' => 'url',
+        ));
+        
+        // 탭 활성화 (active 상태)
+        $wp_customize->add_setting("aros_tab{$i}_active", array(
+            'default' => ($i === 1) ? true : false,
+            'sanitize_callback' => 'wp_validate_boolean',
+        ));
+        
+        $wp_customize->add_control("aros_tab{$i}_active", array(
+            'label' => "탭 {$i} 활성화 (Active)",
+            'section' => 'aros_tabs',
+            'type' => 'checkbox',
+            'description' => '체크하면 이 탭이 기본 활성 상태로 표시됩니다',
         ));
     }
     
